@@ -1,1 +1,13 @@
-# wholegenome
+# Methods for childhood tumor analysis using whole genome sequencing. Developed at the Hospital for Sick Children.
+
+## Calling somatic rearrangements (large translocations, deletions, inversions and duplications)
+[SVetect](https://github.com/shlienlab/SVetect) is a tool for filtering and classifying structural variants from high throughput whole genome sequence data. Chromosomal rearrangements are first detected using the [Delly algorithm](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3436805/). Artefactual variants are then removed based on mapping quality, read-depth and/or complexity of the reference sequence. Germline variants are cross-checked against the matched-normal and a panel of normals (PON). Filtered rearrangements are then further characterized by determining the breakpoint allele fraction (BAF) and detection of looping structures in the genome.
+
+## Calling simple somatic mutations (small substitutions and indels)
+The [ShlienLab.Core.SSM](https://github.com/shlienlab/ShlienLab.Core.SSM) R package provides a set of methods for identifying, merging and annotating simple somatic mutation (SSM) output from [MuTect2](https://software.broadinstitute.org/gatk/documentation/tooldocs/current/org_broadinstitute_gatk_tools_walkers_cancer_m2_MuTect2.php) and [ANNOVAR](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2938201/) data.  The annotation includes isolating the amino acid, providing the Ensembl gene ID, identifying the HUGO gene name and determining whether the mutations is in a gene found in the COSMIC cancer gene census.  Methods are provided for both SNVs and Indels and retains separate versions of each file.
+
+## Core Quality Filtering
+The [ShlienLab.Core.Filter](https://github.com/shlienlab/ShlienLab.Core.Filter) R package is used to filter simple somatic mutations (i.e. single-nucleotide variants (SNVs) and Insertions/Deletions (indels)).  These filters annotate mutations and provide a flag to determine whether a threshold is met.  Annotations include: identifying whether mutations are found in hard/soft clipped reads, mutations found in a panel of normal samples and identifying mutations found in complex regions of the genome. 
+
+## Functions for interacting with the Cosmic Cancer Gene Census
+The [cosmic.cancer.gene.census](https://github.com/shlienlab/cosmic.cancer.gene.census) R package provides a dataframe containing HUGO gene names found in the Cosmic Cancer Gene Census.  In addition, the package includes a set of functions that annotate a vector of gene names as found in the Cosmic Cancer Gene Census database (TRUE) or not found (FALSE).  To ensure the latest available data, a text delimited file can be downloaded from [COSMIC website](https://cancer.sanger.ac.uk/census) .  This package also includes tools to parse the COSMIC text file and format the data and output a R dataframe that can be used for filtering.
